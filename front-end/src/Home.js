@@ -25,7 +25,7 @@ function Home() {
     formData.append("file", fileData);
     console.log(formData.file)
 
-    const response = await fetch('http://localhost:8000/', {
+    const response = await get('http://localhost:5000/upload', {
       method: 'POST',
       body: formData,
     });
