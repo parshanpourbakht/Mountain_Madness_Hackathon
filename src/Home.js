@@ -1,4 +1,3 @@
-import './styling/Home.css';
 import React, { useState } from "react";
 import { Box, Button, Heading, Text } from "@chakra-ui/react";
 
