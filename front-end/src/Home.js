@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, Heading, Text, Center } from "@chakra-ui/react";
 import { useDropzone } from "react-dropzone";
+import axios from "axios";
 
 function Home() {
   const [fileData, setFileData] = useState(null);
@@ -12,28 +13,22 @@ function Home() {
     accept: "csv",
   });
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!fileData) {
+      alert("Please select a file to upload.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("file", fileData);
+    console.log(formData.file)
 
-
-    try {
-      const response = await fetch("/analysis", {
-        method: "POST",
-        body: formData,
-      });
-      if (response.ok) {
-        console.log("File submitted successfully");
-        // handle success
-      } else {
-        console.error("Server error:", response.status);
-        // handle error
-      }
-    } catch (error) {
-      console.error("Request failed:", error);
-      // handle error
-    }
+    const response = await fetch('http://localhost:8000/', {
+      method: 'POST',
+      body: formData,
+    });
   };
 
   return (
@@ -83,8 +78,8 @@ function Home() {
           _hover={{
             bg: "gray.50",
           }}
-          mb={8}>
-            
+          mb={8}
+        >
           <input {...getInputProps()} />
 
           <Text fontSize="lg">
