@@ -1,10 +1,11 @@
 import os
 
-from flask import Flask, request, render_template, redirect, url_for, send_from_directory
+from flask import Flask, jsonify, request, render_template, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 from datetime import datetime
 import json
 from chatparser import parse_chat_data
+from chickenBurger import analyze_csv
 
 ALLOWED_EXTENSIONS = set(['csv'])
 
@@ -18,21 +19,12 @@ def allowed_file(filename):
 
 app = Flask(__name__)
 
-@app.route('/upload', methods=['GET', 'POST'])
+@app.route('/upload')
 
 
-def upload():
-    if request.method == 'POST':
-        file = request.files['file']
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            
-            ret_json = parse_chat_data(filename)
-            ret_json = json.dumps(json.loads(ret_json))
-            ret_json.headers.add('Access-Control-Allow-Origin', '*')
-            #return json.loads(ret_json)
-            return {1:1}
-    return {1:1}
+def get_data():
+    data = analyze_csv("bruh.csv")
+    return data
 
 
 if __name__ == '__main__':

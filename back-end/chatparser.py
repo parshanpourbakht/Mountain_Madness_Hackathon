@@ -56,4 +56,4 @@ def parse_chat_data(filename):
                         pd.Series({"Word":user2,
                         "Frequency":mean_response_times[user2]}).to_frame().T])
     return df.to_json(orient="records")
-    
+
