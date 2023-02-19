@@ -1,15 +1,17 @@
-from flask import Flask, jsonify, request
+from flask import Flask
+from flask_cors import CORS
 
-app = Flask(__name__)
+api = Flask(__name__)
 
+CORS(api)
 
+@api.route('/profile')
+def my_profile():
+    response_body = {
+        "name": "Nagato",
+        "about" :"Hello! I'm a full stack developer that loves python and javascript"
+    }
 
-@app.route('/', methods=['POST', 'GET'])
-def data():
-    return 'Hello, World!'
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    return response_body
 
     
