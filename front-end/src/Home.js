@@ -5,6 +5,7 @@ import axios from "axios";
 
 function Home() {
   const [fileData, setFileData] = useState(null);
+  const [profileData, setProfileData] = useState(null);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
@@ -30,6 +31,24 @@ function Home() {
       body: formData,
     });
   };
+
+  function getData() {
+    axios({
+      method: "GET",
+      url:"http://localhost:5000/upload",
+    })
+    .then((response) => {
+      const res =response.data
+      setProfileData(({
+        profile_name: res.ily,
+        about_me: res.love}))
+    }).catch((error) => {
+      if (error.response) {
+        console.log(error.response)
+        console.log(error.response.status)
+        console.log(error.response.headers)
+        }
+    })}
 
   return (
     <Box maxW="4xl" mx="auto" mt={10}>
