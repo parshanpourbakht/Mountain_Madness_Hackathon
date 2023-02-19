@@ -3,7 +3,7 @@ from collections import Counter
 import nltk
 import os
 
-def Parse_Chat_Data(filename):
+def parse_chat_data(filename):
     os.chdir('python_src')
     file = pd.read_csv("Direct_Messages_-_Private_-_kathy_816837415288963072.csv")
     file.drop(["AuthorID", "Attachments", "Reactions"], inplace=True, axis = 1)
@@ -37,7 +37,7 @@ def Parse_Chat_Data(filename):
     )
 
     # generate DF out of Counter
-    rslt1 = pd.DataFrame(Counter(words).most_common(50),
+    rslt1 = pd.DataFrame(Counter(words).most_common(100),
                         columns=['Word', 'Frequency'])
 
 
@@ -49,11 +49,12 @@ def Parse_Chat_Data(filename):
     )
 
     # generate DF out of Counter
-    rslt2 = pd.DataFrame(Counter(words).most_common(50),
+    rslt2 = pd.DataFrame(Counter(words).most_common(100),
                         columns=['Word', 'Frequency'])
 
-    return pd.concat([rslt1, pd.Series({"Word":user1,
+    df = pd.concat([rslt1, pd.Series({"Word":user1,
                         "Frequency":mean_response_times[user1]}).to_frame().T, rslt2,
                         pd.Series({"Word":user2,
                         "Frequency":mean_response_times[user2]}).to_frame().T])
+    return df.to_json(orient="records")
     
