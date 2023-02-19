@@ -58,6 +58,7 @@ function Home() {
           borderStyle="dashed"
           rounded="md"
           p={4}
+          bgColor={'#FED8B1'}
           textAlign="center"
           cursor="pointer"
           _hover={{
