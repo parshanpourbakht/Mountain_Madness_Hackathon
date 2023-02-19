@@ -64,8 +64,8 @@ function Home() {
           _hover={{
             bg: "gray.50",
           }}
-          mb={8}
-        >
+          mb={8}>
+            
           <input {...getInputProps()} />
 
           <Text fontSize="lg">
